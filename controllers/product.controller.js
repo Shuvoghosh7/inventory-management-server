@@ -1,5 +1,6 @@
 const Products=require('../models/Product')
 
+const { getProductsService, createProductService, updateProductService, bulkUpdateProductService, deleteProductService, bulkDeleteProductService } = require("../services/product.services")
 
 exports.getController=async(req,res,next)=>{
     try {
@@ -9,9 +10,11 @@ exports.getController=async(req,res,next)=>{
       .limit(2).sort({quantity:-1}) */
   
       //find by id
-      const product=await Products.find({})
-      
-  
+      const quaryObject={...req.query}
+      //solt,page,limit, --- exclude
+      const excludeField=['sort','page','limit']
+      excludeField.forEach(field =>delete quaryObject[field])
+      const product=await getProductsService(quaryObject)
       res.status(200).json({
         status:"success",
         data:product 
@@ -37,7 +40,7 @@ exports.getController=async(req,res,next)=>{
      
   
       //create method
-      const result=await Products.create(req.body)
+      const result=await createProductService(req.body)
   
       res.status(200).json({
         stauts: "success",
@@ -53,4 +56,87 @@ exports.getController=async(req,res,next)=>{
   
     }
     
+  }
+
+  exports.updateProduct=async(req,res,next)=>{
+    try {
+      const {id}=req.params;
+      const result=await updateProductService(id,req.body)
+      res.status(200).json({
+        stauts: "success",
+        massage: "Data Update successfully",
+        data: result
+      })
+      
+    } catch (error) {
+      res.status(400).json({
+        stauts:"fail",
+        message: "Product is not update",
+        error : error.message
+      })
+    }
+
+  }
+
+  exports.bulkUpdateProduct=async(req,res,next)=>{
+    try {
+      const result=await bulkUpdateProductService(req.body)
+      res.status(200).json({
+        stauts: "success",
+        massage: "Data Update successfully",
+        data: result
+      })
+      
+    } catch (error) {
+      res.status(400).json({
+        stauts:"fail",
+        message: "Product is not update",
+        error : error.message
+      })
+    }
+
+  }
+
+  exports.deleteProduct=async(req,res,next)=>{
+    try {
+      const {id}=req.params;
+      const result=await deleteProductService(id)
+      if(!result.deletedCount){
+        return res.status({
+          stauts: "fail",
+          error: "Could not delete the product",
+        })
+      }
+      res.status(200).json({
+        stauts: "success",
+        massage: "Data Update successfully",
+      })
+      
+    } catch (error) {
+      res.status(400).json({
+        stauts:"fail",
+        message: "Product is not update",
+        error : error.message
+      })
+    }
+
+  }
+
+  exports.bulkDeleteProduct=async(req,res,next)=>{
+    try {
+      const result=await bulkDeleteProductService(req.body.ids)
+      res.status(200).json({
+        stauts: "success",
+        massage: "Delete multipl produts successfully",
+        data: result
+      })
+      
+    } catch (error) {
+      res.status(400).json({
+        stauts:"fail",
+        message: "Delete multipl produts not successfully",
+        error : error.message
+      })
+    }
+
   }
