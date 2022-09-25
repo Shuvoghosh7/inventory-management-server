@@ -93,7 +93,7 @@ const productSchema = mongoose.Schema({
     console.log(`Data save for ${this.name}`)
   }
   
-  //SCHEMA-NODEL-QUERY
+  //SCHEMA-MODEL-QUERY
   
   //model
   const Products = mongoose.model('Products', productSchema)
