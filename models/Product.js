@@ -1,3 +1,4 @@
+const { ObjectID } = require("bson");
 const mongoose = require("mongoose");
 
 //schema design
@@ -6,6 +7,7 @@ const productSchema = mongoose.Schema({
       type: String,
       required: [true, "Please provide a name for thid product"],
       trim: true,
+      lowercase:true,
       unique: [true, "Name must be Unique"],
       minLength: [3, "Name mast be 3 characters"],
       maxLength: [100, "Name is too larges"],
@@ -14,44 +16,48 @@ const productSchema = mongoose.Schema({
       type: String,
       required: true
     },
-    price: {
-      type: Number,
-      required: true,
-      min: [0, "Price can't be negative"]
-    },
     unit: {
       type: String,
       required: true,
       enum: {
-        values: ["kg", "liter", "pcs"],
+        values: ["kg", "liter", "pcs","bag"],
         massage: "Unit value can't be {VALUE},must be kg/liter/pcs",
       }
     },
-    quantity: {
-      type: Number,
+    imageUrl:[{
+      type:String,
       required: true,
-      min: [0, "quantity can't be negative"],
-      validate: {
-        validator: (value) => {
-          const isInteger = Number.isInteger(value);
-          if (isInteger) {
-            return true
-          } else {
-            return false
+      validate:{
+        validator:(value)=>{
+          if(!Array.isArray(value)){
+            return false;
           }
-        }
-      },
-      massage: "Quentuty must be integer"
+          let isValid=true;
+          value.forEach(url =>{
+            if(!validator.isURL(url)){
+              isValid.false;
+            }
+          });
+          return isValid;
+        },
+        massage: "Plese provide valid image url"
+      }
+    }],
+    category:{
+      type:String,
+      require:true,
     },
-    stauts: {
-      type: String,
-      required: true,
-      enum: {
-        values: ["in-stock", "out-of-stock", "discontinued"],
-        massage: "stauts value can't be {VALUE}",
+    brand:{
+      name:{
+        type:String,
+        require:true,
       },
-  
-    },
+      id:{
+        type:ObjectID,
+        ref:"Brand",
+        require:true,
+      }
+    }
     /* createdAt:{
       type:Date,
       default:Date.now,
@@ -60,18 +66,6 @@ const productSchema = mongoose.Schema({
       type:Date,
       default:Date.now,
     } */
-    //referance way connect another collection
-    /* supplier:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref:"Supplier"
-    },
-    categories:[{
-      name:{
-        type:String,
-        required:true,
-      },
-      _id: mongoose.Schema.Types.ObjectId,
-    }] */
   }, {
     timestamps: true
   })
