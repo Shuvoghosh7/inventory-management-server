@@ -22,9 +22,9 @@ const brandSchema = mongoose.Schema({
         validator:[validator.isURL,"Plese provide a valid url"]
     },
     location:String,
-    products:[{
+   /*  products:[{
         type:objectId,
-        ref:"product",//this object ID come product model
+        ref:"product"
     }],
     suppliers:[{
         name:String,
@@ -33,7 +33,7 @@ const brandSchema = mongoose.Schema({
             type:objectId,
             ref:"supplier"
         }
-    }],
+    }], */
     status:{
         type:String,
         enum:["active","inactive"],
@@ -43,6 +43,7 @@ const brandSchema = mongoose.Schema({
     timestamps: true
 })
 
-const Brand=mongoose.model("Brand",brandSchema)
 
-module.exports=Brand;
+const Brands = mongoose.model('Brands', brandSchema);
+
+module.exports=Brands;
