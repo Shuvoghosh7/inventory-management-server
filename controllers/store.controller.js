@@ -1,13 +1,14 @@
-const { getStoreService, createStoreService, getStoreByIdService } = require("../services/store.service")
+const { createStoreService, getStoreService, getStoreByIdService } = require("../services/store.servicvice")
+
 
 exports.createStore=async (req, res, next) => {
     try {
       //create method
-      const result=await createStoreService()
-  
+      const result=await createStoreService(req.body)
+
       res.status(200).json({
         stauts: "success",
-        massage: "successfully create a brand",
+        massage: "successfully create a store",
         data: result
       })
     } catch (error) {
@@ -43,7 +44,7 @@ exports.getStore=async (req, res, next) => {
 exports.getStoreById=async (req, res, next) => {
     const {id}=req.params;
     try {
-      const brand=await getBrandByIdService(id);
+      const brand=await getStoreByIdService(id);
       if(!brand){
         return res.status(400).json({
             stauts:"fail",

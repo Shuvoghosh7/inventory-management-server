@@ -1,12 +1,10 @@
 const express = require("express");
 const router=express.Router()
-const storeController=require('../controllers/store.controller')
-
+const stroeController=require('../controllers/store.controller')
 router.route('/')
-.get(storeController.getStore)
-.post(storeController.createStore)
+.post(stroeController.createStore)
+.get(stroeController.getStore)
 router.route('/:id')
-.get(storeController.getStoreById)
+.get(stroeController.getStoreById)
 
-
- module.exports=router;
+module.exports=router;

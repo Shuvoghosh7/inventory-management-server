@@ -169,3 +169,11 @@ exports.updateProduct=async(req,res,next)=>{
     }
 
   }
+
+  exports.fileUpload=async (req, res, next) => {
+    try {
+      res.status(200).join(req.files);
+    } catch (error) {
+      
+    }
+  }

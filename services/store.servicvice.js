@@ -1,8 +1,8 @@
 const Store = require("../models/Store");
 
 exports.createStoreService = async (data) => {
-    const result = await Store.create(data)
-    return result;
+    const store = await Store.create(data)
+    return store;
 }
 exports.getStoreService = async () => {
     const store = await Store.find({})
