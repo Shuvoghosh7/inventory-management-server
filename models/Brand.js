@@ -28,7 +28,7 @@ const brandSchema = mongoose.Schema({
     }],
     suppliers:[{
         name:String,
-        conttactNumber:String,
+        contactNumber:String,
         id:{
             type:ObjectId,
             ref:"supplier"

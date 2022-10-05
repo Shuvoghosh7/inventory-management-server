@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require('validator');
-const {objectId} =mongoose.Schema.Types;
+const {ObjectId} =mongoose.Schema.Types;
 
 const storeSchema = mongoose.Schema({
     name:{
@@ -18,14 +18,14 @@ const storeSchema = mongoose.Schema({
         enum:["active","inactive"],
         default:"active"
     },
-    /* manager:[{
+    manager:[{
         name:String,
         conttactNumber:String,
         id:{
-            type:objectId,
+            type:ObjectId,
             ref:"User"
         }
-    }] */
+    }]
      
 },{
     timestamps: true

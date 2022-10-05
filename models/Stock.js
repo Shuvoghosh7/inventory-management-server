@@ -93,7 +93,7 @@ const stockSchema = mongoose.Schema({
             }
         },
         id: {
-            type: objectId,
+            type: ObjectId,
             require: true,
             ref: "Store"
         }
@@ -106,7 +106,7 @@ const stockSchema = mongoose.Schema({
             lowercase: true,
         },
         id: {
-            type: objectId,
+            type: ObjectId,
             require: true,
             ref: "Supplier"
         }  

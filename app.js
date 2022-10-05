@@ -11,6 +11,7 @@ const productRoute=require('./routes/product.route')
 const brandRoute=require('./routes/brand.route')
 const storeRoute=require("./routes/store.route")
 const catagoryRoute=require("./routes/catagory.route")
+const supplierRoute=require("./routes/supplier.route")
 
 
 
@@ -23,6 +24,7 @@ app.use("/api/v1/product",productRoute)
 app.use("/api/v1/brands",brandRoute)
 app.use("/api/v1/store",storeRoute)
 app.use("/api/v1/catagory",catagoryRoute) 
+app.use("/api/v1/supplier",supplierRoute) 
 
 
 module.exports = app;
