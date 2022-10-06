@@ -8,15 +8,7 @@ const stockSchema = mongoose.Schema({
         required: true,
         ref: "Product"
     },
-    name: {
-        type: String,
-        required: [true, "Please provide a name for thid product"],
-        trim: true,
-        lowercase: true,
-        unique: [true, "Name must be Unique"],
-        minLength: [3, "Name mast be 3 characters"],
-        maxLength: [100, "Name is too larges"],
-    },
+    name:String,
     description: {
         type: String,
         required: true
@@ -32,21 +24,7 @@ const stockSchema = mongoose.Schema({
     imageUrl: [{
         type: String,
         required: true,
-        validate: {
-            validator: (value) => {
-                if (!Array.isArray(value)) {
-                    return false;
-                }
-                let isValid = true;
-                value.forEach(url => {
-                    if (!validator.isURL(url)) {
-                        isValid.false;
-                    }
-                });
-                return isValid;
-            },
-            massage: "Plese provide valid image url"
-        }
+        validate: [validator.isURL , "Plese Provide valid URL"]
     }],
     price: {
         type: Number,
@@ -73,20 +51,11 @@ const stockSchema = mongoose.Schema({
             require: true,
         },
     },
-    status: {
-        type: String,
-        require: true,
-        enum: {
-            values: ['in-stock', 'out-of-stock', 'discontinued'],
-            massage: 'status can not be {VALUE}'
-        }
-    },
     store: {
         name: {
             type: String,
             trim: true,
             require: true,
-            lowercase: true,
             enum: {
                 values: ["Dhaka", "Chattogam", "Rajshahi", "sylhet", "khulna", "barisal", "Rangpur", "Mymensingh"],
                 message: "{VALUE} is not valid name"
@@ -96,6 +65,14 @@ const stockSchema = mongoose.Schema({
             type: ObjectId,
             require: true,
             ref: "Store"
+        }
+    },
+    status: {
+        type: String,
+        require: true,
+        enum: {
+            values: ['in-stock', 'out-of-stock', 'discontinued'],
+            massage: 'status can not be {VALUE}'
         }
     },
     suppliedBy:{
@@ -110,6 +87,11 @@ const stockSchema = mongoose.Schema({
             require: true,
             ref: "Supplier"
         }  
+    },
+    sellCount:{
+        type:Number,
+        default:0,
+        min:0
     }
 }, {
     timestamps: true
