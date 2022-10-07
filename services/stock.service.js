@@ -1,3 +1,4 @@
+const { ObjectId } = require("mongodb");
 const Stock = require("../models/Stock");
 
 
@@ -18,6 +19,13 @@ exports.createStockService = async (data) => {
     return result;
 }
 exports.getStockByIdService = async (id) => {
-    const result = await Stock.findOne({_id:id}).populate("store.id").populate("suppliedBy.id").populate("brand.id")
+    const result = await Stock.findOne({_id:id})
+    .populate("store.id")
+    .populate("suppliedBy.id")
+    .populate("brand.id")
+    // const result=await Stock.aggregate([
+    //     //stage 1
+    //     {$match:{_id:ObjectId(id)}}
+    // ])
     return result;
 }

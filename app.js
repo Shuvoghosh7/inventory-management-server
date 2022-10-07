@@ -13,6 +13,7 @@ const storeRoute=require("./routes/store.route")
 const catagoryRoute=require("./routes/catagory.route")
 const supplierRoute=require("./routes/supplier.route")
 const stockRoute=require("./routes/stock.Route")
+const userSingupRoute=require("./routes/user.route")
 
 
 
@@ -27,6 +28,7 @@ app.use("/api/v1/store",storeRoute)
 app.use("/api/v1/catagory",catagoryRoute) 
 app.use("/api/v1/supplier",supplierRoute) 
 app.use("/api/v1/stock",stockRoute) 
+app.use("/api/v1/user",userSingupRoute) 
 
 
 module.exports = app;

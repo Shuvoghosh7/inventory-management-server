@@ -40,7 +40,7 @@ const productSchema = mongoose.Schema({
           });
           return isValid;
         },
-        massage: "Plese provide valid image url"
+        message: "Plese provide valid image url"
       }
     }],
     category:{

@@ -47,7 +47,7 @@ const stockSchema = mongoose.Schema({
         },
         id: {
             type: ObjectId,
-            ref: "Brand",
+            ref: "Brands",
             require: true,
         },
     },
