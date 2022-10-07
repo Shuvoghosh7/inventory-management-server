@@ -33,7 +33,7 @@ const userSchema = mongoose.Schema({
             message: "password does not match"
         }
     },
-    roll: {
+    role: {
         type: String,
         enum: ["buyer", "store-manages", "admin"],
         default: "buyer",
@@ -80,6 +80,12 @@ userSchema.pre("save",function(next){
     this.confirmPassword=undefined;
     next();
 })
+
+userSchema.methods.comparePassword=function(password,hash){
+    const isPasswordValid=bcrypt.compareSync(password,hash);
+    return isPasswordValid;
+
+}
 
 const User=mongoose.model('User', userSchema);
 
