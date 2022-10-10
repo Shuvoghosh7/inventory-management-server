@@ -40,45 +40,45 @@ exports.login = async (req, res, next) => {
       })
     }
     // 2.Load user with email
-    const user=await getUserByEmail(email)
+    const user = await getUserByEmail(email)
     // 3.if not user send res
-    if(!user){
+    if (!user) {
       return res.status(401).json({
         stauts: "fail",
         error: "user not found.Please create account",
       })
     }
     // 4.compare password
-/*     const isPasswordValid=bcrypt.compareSync    (password,user.password) */
-    
-    const isPasswordValid=user.comparePassword(password,user.password)
-    
+    /*     const isPasswordValid=bcrypt.compareSync    (password,user.password) */
+
+    const isPasswordValid = user.comparePassword(password, user.password)
+
     // 5.if password not correct send res
-    if(!isPasswordValid){
+    if (!isPasswordValid) {
       return res.status(403).json({
         stauts: "fail",
         error: "password is not correct",
       })
     }
     // 6,7.check if user is active
-    if(user.status != "active"){
+    if (user.status != "active") {
       return res.status(401).json({
         stauts: "fail",
         error: "Your Account is not active",
       })
     }
     // 8.generate token
-    const token= generateToken(user)
-    
+    const token = generateToken(user)
+
     //send without password
-    const{password:pws,...others}=user.toObject();
+    const { password: pws, ...others } = user.toObject();
 
     // 9.send user and token
     res.status(200).json({
       stauts: "success",
       massage: "successfully login in",
       data: {
-        user:others,
+        user: others,
         token
       }
     })
@@ -87,6 +87,22 @@ exports.login = async (req, res, next) => {
       stauts: "fail",
       message: "Data is not inserted",
       error: error.message
+    })
+  }
+}
+
+exports.getMe = async (req, res) => {
+  try {
+    const user= await getUserByEmail(req.user?.email)
+    res.status(200).json({
+      status:"Success",
+      data:user
+    })
+
+  } catch (error) {
+    res.status(400).json({
+      stauts: "fail",
+      error,
     })
   }
 }
